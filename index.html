@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator (Classic)</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- CONTROLS SIDEBAR -->
+        <aside class="controls no-print">
+            <div class="control-header">
+                <h2>Invoice Controls</h2>
+            </div>
+
+            <!-- Section: Company Info -->
+            <div class="control-group">
+                <details open>
+                    <summary>Company Info</summary>
+                    <input type="file" id="inp-logo" accept="image/*" title="Upload Logo">
+                    <input type="range" id="inp-logo-size" min="50" max="250" value="150" title="Logo Size">
+                    <input type="text" id="inp-comp-name" placeholder="Your Company Name">
+                    <textarea id="inp-comp-addr" rows="2" placeholder="Address"></textarea>
+                    <input type="text" id="inp-comp-gst" placeholder="GSTIN">
+                    <input type="text" id="inp-comp-contact" placeholder="Contact/Email">
+                </details>
+            </div>
+
+            <!-- Section: Invoice & Transport -->
+            <div class="control-group">
+                <details>
+                    <summary>Invoice & Transport</summary>
+                    <input type="text" id="inp-inv-no" placeholder="Invoice No (e.g. INV-001)">
+                    <input type="date" id="inp-inv-date" title="Invoice Date">
+                    <input type="text" id="inp-ord-no" placeholder="Order No">
+                    <input type="text" id="inp-trans-mode" placeholder="Transport Mode">
+                    <input type="text" id="inp-veh-no" placeholder="Vehicle No">
+                    <input type="text" id="inp-supply-place" placeholder="Place of Supply">
+                </details>
+            </div>
+
+            <!-- Section: Bill To / Ship To -->
+            <div class="control-group">
+                <details>
+                    <summary>Bill To / Ship To</summary>
+                    <input type="text" id="inp-bill-name" placeholder="Customer Name">
+                    <textarea id="inp-bill-addr" rows="2" placeholder="Billing Address"></textarea>
+                    <input type="text" id="inp-bill-gst" placeholder="Customer GSTIN">
+                    <label style="font-size:12px; display:block; margin:5px 0;">
+                        <input type="checkbox" id="chk-same-ship" checked> Ship to same address
+                    </label>
+                    <div id="ship-inputs" style="display:none;">
+                        <input type="text" id="inp-ship-name" placeholder="Shipping Name">
+                        <textarea id="inp-ship-addr" rows="2" placeholder="Shipping Address"></textarea>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Section: Bank Details -->
+            <div class="control-group">
+                <details>
+                    <summary>Bank Details</summary>
+                    <input type="text" id="inp-bank-name" placeholder="Bank Name" value="State Bank of India">
+                    <input type="text" id="inp-bank-ac" placeholder="A/C Number">
+                    <input type="text" id="inp-bank-ifsc" placeholder="IFSC Code">
+                    <input type="text" id="inp-bank-upi" placeholder="UPI ID (For QR Code)">
+                </details>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3>Add Item</h3>
+            <input type="text" id="inp-item-desc" placeholder="Item Description">
+            <div class="row">
+                <input type="text" id="inp-item-hsn" placeholder="HSN/SAC" class="half">
+                <input type="text" id="inp-item-unit" placeholder="Unit" class="half">
+            </div>
+            <div class="row">
+                <input type="number" id="inp-item-price" placeholder="Price" class="half">
+                <input type="number" id="inp-item-qty" placeholder="Qty" class="half">
+            </div>
+            <input type="number" id="inp-item-tax" placeholder="Tax % (e.g, 18)" value="18">
+            <!-- CRITICAL FIX: type="button" prevents form submission/reload -->
+            <div class="row">
+                <button type="button" id="btn-add-item" class="btn primary half">Add Item</button>
+                <button type="button" id="btn-clear-item" class="btn half"
+                    style="background:#ccc; color:#333;">Cancel</button>
+            </div>
+
+            <div class="divider"></div>
+            <button type="button" id="btn-print" class="btn success">Download PDF / Print</button>
+        </aside>
+
+        <!-- INVOICE PREVIEW -->
+        <main class="preview">
+            <div class="page" id="invoice-page">
+
+                <!-- Header -->
+                <header class="inv-header">
+                    <div class="logo-area">
+                        <img id="out-logo" src="" style="display:none;">
+                        <div id="logo-placeholder" style="display:none;">LOGO</div>
+                    </div>
+                    <div class="title-area">
+                        <h1>INVOICE</h1>
+                        <p class="sub-title">Original for Recipient</p>
+                        <div class="qr-holder">
+                            <img id="out-qr" style="display:none;">
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Metadata Box -->
+                <section class="meta-box">
+                    <div class="meta-left">
+                        <div class="label-val"><span>Invoice No:</span> <strong id="out-inv-no"></strong></div>
+                        <div class="label-val"><span>Date:</span> <strong id="out-inv-date"></strong></div>
+                        <div class="label-val"><span>Order No:</span> <span id="out-ord-no"></span></div>
+                    </div>
+                    <div class="meta-right">
+                        <div class="label-val"><span>Transport:</span> <span id="out-trans-mode"></span></div>
+                        <div class="label-val"><span>Vehicle:</span> <span id="out-veh-no"></span></div>
+                        <div class="label-val"><span>Supply Place:</span> <span id="out-supply-place"></span></div>
+                    </div>
+                </section>
+
+                <!-- Sender / Receiver -->
+                <section class="address-grid">
+                    <div class="addr-box">
+                        <h3>Sold By</h3>
+                        <strong id="out-comp-name" class="big-name">YOUR COMPANY</strong>
+                        <div id="out-comp-addr">Address Line 1...</div>
+                        <div>GSTIN: <span id="out-comp-gst"></span></div>
+                        <div id="out-comp-contact"></div>
+                    </div>
+                    <div class="addr-box">
+                        <h3>Bill To</h3>
+                        <strong id="out-bill-name" class="big-name">Customer Name</strong>
+                        <div id="out-bill-addr">Address...</div>
+                        <div>GSTIN: <span id="out-bill-gst"></span></div>
+                    </div>
+                    <div class="addr-box">
+                        <h3>Ship To</h3>
+                        <strong id="out-ship-name" class="big-name">Customer Name</strong>
+                        <div id="out-ship-addr">Address...</div>
+                    </div>
+                </section>
+
+                <!-- Items Table -->
+                <table class="inv-table">
+                    <thead>
+                        <tr>
+                            <th width="5%">#</th>
+                            <th width="35%">Description</th>
+                            <th width="10%">HSN</th>
+                            <th width="8%">Qty</th>
+                            <th width="8%">Unit</th>
+                            <th width="10%" class="text-right">Price</th>
+                            <th width="10%" class="text-right">Taxable</th>
+                            <th width="14%" class="text-right">Total</th>
+                            <th width="5%" class="no-print"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="items-body">
+                        <!-- Items go here -->
+                    </tbody>
+                </table>
+
+                <!-- Footer Section -->
+                <footer class="inv-footer">
+                    <div class="footer-left">
+                        <div class="bank-details">
+                            <h4>Bank Details</h4>
+                            <div>Bank: <span id="out-bank-name"></span></div>
+                            <div>A/c No: <span id="out-bank-ac"></span></div>
+                            <div>IFSC: <span id="out-bank-ifsc"></span></div>
+                            <div>UPI: <span id="out-bank-upi"></span></div>
+                        </div>
+                        <div class="amount-words">
+                            Amount in Words:<br>
+                            <strong id="out-amount-words">Zero Only</strong>
+                        </div>
+                    </div>
+                    <div class="footer-right">
+                        <div class="summary-line"><span>Taxable Amount:</span> <span id="sum-taxable">0.00</span></div>
+                        <div class="summary-line"><span>CGST:</span> <span id="sum-cgst">0.00</span></div>
+                        <div class="summary-line"><span>SGST:</span> <span id="sum-sgst">0.00</span></div>
+                        <div class="summary-line"><span>IGST:</span> <span id="sum-igst">0.00</span></div>
+                        <div class="summary-line total"><span>Grand Total:</span> <span id="sum-total">0.00</span></div>
+                    </div>
+                </footer>
+
+                <div class="terms-sig">
+                    <div class="terms">
+                        <strong>Terms & Conditions:</strong>
+                        <ol>
+                            <li>Goods once sold will not be taken back.</li>
+                            <li>Subject to local jurisdiction.</li>
+                        </ol>
+                    </div>
+                    <div class="sig-block">
+                        <div class="sig-box"></div>
+                        <div class="sig-label">Authorized Signatory</div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js?v=3.1.0"></script>
+</body>
+
+</html>

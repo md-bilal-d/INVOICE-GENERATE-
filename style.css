@@ -1,0 +1,361 @@
+/* Base Reset */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f4f4f4;
+    color: #333;
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 30px;
+}
+
+/* Sidebar Controls */
+.controls {
+    width: 320px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    max-height: 95vh;
+    overflow-y: auto;
+}
+
+.control-header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.control-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.half {
+    flex: 1;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.btn.primary {
+    background: #333;
+}
+
+.btn.success {
+    background: #2f9e44;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+details {
+    margin-bottom: 10px;
+    border: 1px solid #f0f0f0;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 5px;
+}
+
+/* Invoice Preview Page */
+.preview {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    background: white;
+    padding: 15mm;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+/* Invoice Header */
+.inv-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.logo-area img {
+    max-height: 80px;
+    max-width: 200px;
+}
+
+.title-area {
+    text-align: right;
+}
+
+.title-area h1 {
+    margin: 0;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #222;
+}
+
+.sub-title {
+    margin: 5px 0;
+    color: #666;
+    font-size: 12px;
+}
+
+.qr-holder img {
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+}
+
+/* Meta Box */
+.meta-box {
+    display: flex;
+    justify-content: space-between;
+    background: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+
+.label-val {
+    margin-bottom: 4px;
+}
+
+.label-val span {
+    color: #666;
+    width: 80px;
+    display: inline-block;
+}
+
+/* Addresses */
+.address-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    gap: 20px;
+}
+
+.addr-box {
+    flex: 1;
+    font-size: 13px;
+}
+
+.addr-box h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.big-name {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.inv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 30px;
+    table-layout: auto;
+    /* Allow columns to adjust to content */
+}
+
+.inv-table th {
+    background: #333;
+    color: white;
+    padding: 8px;
+    text-align: left;
+    overflow: hidden;
+    /* Clip header overflow */
+}
+
+.inv-table td {
+    border-bottom: 1px solid #eee;
+    padding: 8px;
+    vertical-align: top;
+    overflow-wrap: break-word;
+    /* Break long words */
+    word-break: normal;
+    /* Don't break numbers awkwardly */
+}
+
+/* Numeric columns - keep numbers on one line */
+.inv-table td.text-right,
+.inv-table .text-right {
+    text-align: right;
+    white-space: nowrap;
+    min-width: 80px;
+    /* Ensure enough space for numbers */
+}
+
+.inv-table .text-center {
+    text-align: center;
+}
+
+/* Footer */
+.inv-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.footer-left {
+    width: 55%;
+}
+
+.footer-right {
+    width: 40%;
+}
+
+.bank-details {
+    font-size: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    padding: 10px;
+    background: #fafafa;
+}
+
+.bank-details h4 {
+    margin: 0 0 5px 0;
+    font-size: 13px;
+}
+
+.amount-words {
+    font-size: 13px;
+    border-left: 3px solid #333;
+    padding-left: 10px;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.summary-line.total {
+    font-weight: 700;
+    font-size: 16px;
+    border-top: 2px solid #333;
+    border-bottom: none;
+    padding-top: 10px;
+    margin-top: 5px;
+}
+
+/* Terms & Sig */
+.terms-sig {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 11px;
+    margin-top: auto;
+}
+
+.terms ol {
+    padding-left: 15px;
+    margin: 5px 0;
+}
+
+.sig-block {
+    text-align: center;
+    width: 150px;
+}
+
+.sig-box {
+    height: 50px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 5px;
+}
+
+/* Utilities */
+.text-right {
+    text-align: right;
+}
+
+/* .no-print {} - utility class used in HTML, rules defined in @media print */
+
+@media print {
+
+    .no-print,
+    .controls {
+        display: none !important;
+    }
+
+    .app-container {
+        display: block;
+        padding: 0;
+        max-width: none;
+    }
+
+    .page {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .inv-table th {
+        background: #000 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body {
+        background: white;
+    }
+}
