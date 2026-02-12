@@ -327,6 +327,203 @@ summary {
 
 /* .no-print {} - utility class used in HTML, rules defined in @media print */
 
+/* ========================================
+   MOBILE RESPONSIVE STYLES
+   ======================================== */
+
+/* Tablet and smaller (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+    .app-container {
+        flex-direction: column;
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .controls {
+        width: 100%;
+        max-height: none;
+        margin-bottom: 20px;
+    }
+
+    .page {
+        width: 100%;
+        min-height: auto;
+        padding: 10mm;
+    }
+}
+
+/* Mobile (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .app-container {
+        padding: 5px;
+        gap: 15px;
+    }
+
+    .controls {
+        padding: 15px;
+        border-radius: 6px;
+    }
+
+    .control-header h2 {
+        font-size: 16px;
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    /* Invoice Preview */
+    .page {
+        padding: 8mm;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .inv-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .title-area {
+        text-align: center;
+    }
+
+    .title-area h1 {
+        font-size: 22px;
+    }
+
+    .logo-area img {
+        max-height: 60px;
+    }
+
+    .qr-holder img {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Meta Box */
+    .meta-box {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 11px;
+    }
+
+    /* Address Grid */
+    .address-grid {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .addr-box {
+        font-size: 12px;
+    }
+
+    .addr-box h3 {
+        font-size: 13px;
+    }
+
+    /* Table */
+    .inv-table {
+        font-size: 10px;
+    }
+
+    .inv-table th,
+    .inv-table td {
+        padding: 6px 4px;
+    }
+
+    /* Make table scrollable on very small screens */
+    .inv-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Footer */
+    .inv-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .footer-left,
+    .footer-right {
+        width: 100%;
+    }
+
+    .bank-details {
+        font-size: 11px;
+    }
+
+    .amount-words {
+        font-size: 12px;
+    }
+
+    .summary-line {
+        font-size: 12px;
+    }
+
+    .summary-line.total {
+        font-size: 14px;
+    }
+
+    /* Terms & Signature */
+    .terms-sig {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .sig-block {
+        width: 100%;
+    }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    .control-header h2 {
+        font-size: 15px;
+    }
+
+    .title-area h1 {
+        font-size: 18px;
+    }
+
+    .inv-table {
+        font-size: 9px;
+    }
+
+    .inv-table th,
+    .inv-table td {
+        padding: 4px 2px;
+    }
+
+    /* Stack buttons vertically on very small screens */
+    .row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .half {
+        width: 100%;
+    }
+
+    .page {
+        padding: 5mm;
+    }
+}
+
 @media print {
 
     .no-print,
