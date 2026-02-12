@@ -252,6 +252,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Init
     document.getElementById('inp-inv-date').valueAsDate = new Date();
     document.getElementById('inp-inv-date').dispatchEvent(new Event('input'));
-    document.getElementById('btn-print').addEventListener('click', () => window.print());
+
+    // PDF Download Button
+    document.getElementById('btn-print').addEventListener('click', () => {
+        const element = document.getElementById('invoice-page');
+        const invNo = document.getElementById('inp-inv-no').value || 'invoice';
+        const filename = `${invNo.replace(/[^a-z0-9]/gi, '_')}.pdf`;
+
+        const opt = {
+            margin: 10,
+            filename: filename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    });
 
 });
